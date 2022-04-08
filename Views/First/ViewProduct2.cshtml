@@ -1,0 +1,21 @@
+@model M01.Models.ProductModel
+
+@{
+    Layout = "_Layout";
+    var pdata = ViewData["product"] as ProductModel;
+}
+
+<div class="card bg-primary text-white">
+    <h1 class="card-header">
+        
+        Xin chao @pdata.Name
+    </h1>
+    <div class="card-body">
+
+        <p class="card-text">
+            Giá: @pdata.Price
+        </p>
+    </div>
+</div>
+
+<h1>kieu view data </h1>
