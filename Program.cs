@@ -3,6 +3,8 @@ using M01.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing.Constraints;
+using M01.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,10 @@ builder.Services.Configure<RazorViewEngineOptions>(option => {
 // builder.Services.AddSingleton(typeof(ProductService));
 builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton(typeof(PlanetService), typeof(PlanetService));
+
+// Đăng kí DbContext
+builder.Services.AddDbContext<AppDbContext>(options => 
+       options.UseSqlServer(builder.Configuration.GetConnectionString("AppMvcConnectionString")));
 
 var app = builder.Build();
 
