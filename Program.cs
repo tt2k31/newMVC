@@ -1,5 +1,8 @@
+using M01.ExtendMethods;
 using M01.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,7 @@ builder.Services.Configure<RazorViewEngineOptions>(option => {
 // builder.Services.AddSingleton<ProductService, ProductService>();
 // builder.Services.AddSingleton(typeof(ProductService));
 builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
+builder.Services.AddSingleton(typeof(PlanetService), typeof(PlanetService));
 
 var app = builder.Build();
 
@@ -37,15 +41,63 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.AddStatusCodePages(); // tùy biến trag khi có lỗi 400 lên
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+
+app.UseEndpoints(e => {
+    e.MapGet("/hi", async context => {
+        await context.Response.WriteAsync("conturt      " + DateTime.Now);
+    });
+    
+});
+ 
+app.MapRazorPages();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+//các MapController :
+// app.MapControllers()
+// app.MapControllerRoute()
+// app.MapDefaultControllerRoute()
+// app.MapAreaControllerRoute();
 
-app.MapRazorPages();
+app.MapControllerRoute(
+    name: "firstroute", //tên route
+    // pattern: "start-here/{id}",  //start-here or /start-here/1
+    // defaults: new {
+    //     controller = "First" ,
+    //     action = "ViewProduct",
+    //     id = 3
+    // }
+    
+    pattern: "start-here/{controller=Home}/{action=Index}/{id?}"
+
+    );
+
+app.MapControllerRoute(
+    name: "first",
+    pattern: "{url}/{id}",
+    defaults: new {
+        controller = "First",
+        action = "ViewProduct"
+    },
+    constraints: new {          //ràng buộc cho các giá trị
+        // url = new StringRouteConstraint("xémanpham") or trực tiếp
+        url = "xemsp",
+        id = new RangeRouteConstraint(2,4)  
+    } 
+);
+
+app.MapAreaControllerRoute(
+    name: "product",
+    pattern: "{controller=Home}/{action=Index}/{id?}",
+    areaName: "ProductManage"
+);
 
 app.Run();

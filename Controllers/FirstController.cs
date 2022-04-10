@@ -108,6 +108,7 @@ namespace M01.Controllers
             return View((object)username);
         }
 
+        [AcceptVerbs("POST", "GET")]
         public IActionResult ViewProduct(int? id)
         {
             var product = _productService.Where(p => p.Id == id).FirstOrDefault();

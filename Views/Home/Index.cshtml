@@ -10,3 +10,46 @@
    
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<hr>
+<p>
+    @Url.Action()
+</p>
+<hr>
+<p>
+    @Url.ActionLink()
+</p>
+<hr>
+<p>
+    @Url.Action("Privacy")
+</p>
+<hr>
+<p>
+    @Url.Action("Privacy", new {id = 123, name = "tuntun"})
+</p>
+<hr>
+<p>
+    @Url.Action("Jupiter", "Planet")
+</p>
+<hr>
+<p>
+    @Url.Action("PlanetInfo", "Planet", new {id =3})
+</p>
+<hr>
+<p>
+    @Url.Action("Index", "Product", new {area = "ProductManage"})
+</p>
+
+<hr>
+@{
+    var routedata = new Dictionary<string, string>() 
+        {
+            {"name", "TINTIN"},
+            {"abc", "XYX"},
+            {"id", "3"}
+        };
+}
+<a asp-action="" asp-controller="First"
+    asp-all-route-data = "@routedata" >
+    vd1
+</a>

@@ -1,0 +1,17 @@
+@using M01.Models
+
+@model List<ProductModel>
+
+
+<h1>Danh sach các sp</h1>
+
+<div>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                @item.Name
+            </li>
+        }
+    </ul>
+</div>
