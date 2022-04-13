@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-
+using M01.Models.Contacts;
 
 namespace M01.Models
 {
@@ -13,7 +13,7 @@ namespace M01.Models
 
         }
 
-
+        public DbSet<Contact> contact {set; get;}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
